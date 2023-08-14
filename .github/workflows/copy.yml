@@ -1,7 +1,9 @@
 name: Clone and Push Workflow
 
 on:
-  workflow_dispatch
+  push:
+    branches:
+      - main 
 
 env:
   GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
@@ -23,22 +25,22 @@ jobs:
         git config credential.helper store <<<"${GIT_PASSWORD}"
         git config --global core.askpass /usr/share/doc/git/contrib/credential/gnome-credential-store/git-credential-gnome-keyring
 
-    - name: Clone and push to destination repository
+    - name: Clone destination repository
+      run: git clone "${DEST_REPO_URL}" destination-repo
+        
+    - name: Copy source repository files to destination repository
+      run: cp -r ${{ github.workspace }}/* destination-repo/
+        
+    - name: Move to destination repository directory
+      run: cd destination-repo
+        
+    - name: Configure Git for destination repository
       run: |
-        # Clone the destination repository
-        git clone "${DEST_REPO_URL}" destination-repo
-        
-        # Copy source repository files to destination repository
-        cp -r * destination-repo/
-        
-        # Move to destination repository directory
-        cd destination-repo
-        
-        # Configure Git for the destination repository
         git config user.name "${GIT_USERNAME}"
         git config user.email "${GIT_USERNAME}@users.noreply.github.com"
         
-        # Commit and push changes
+    - name: Commit and push changes
+      run: |
         git add .
         git commit -m "Sync with source repository"
         git push origin main
