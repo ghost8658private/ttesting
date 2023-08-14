@@ -1,39 +1,27 @@
-name: Mirror Main Branch and Create PR
+name: Mirror Repository
 
 on:
   push:
     branches:
-      - main
+      - main  
 
 jobs:
-  mirror-and-create-pr:
+  mirror:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout source code
+      - name: Checkout Source Repository
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+          repository: https://github.com/ghost8658private/ttesting.git  # Change this to the source repository
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Clone destination repository
+      - name: Mirror to Target Repository
         run: |
-            git config --global user.name "Ghost8658"
-            git config --global user.email "Ghost8658@github.com" 
-            git clone --branch main --depth 1 --quiet https://github.com/ghost8658private/trtos.git destination-repo
-
-
-      - name: Push changes to destination repository
-        run: |
-          cd destination-repo
-
-          # Ensure the target branch exists in the destination repository
-          git checkout -B main
-
-          # Fetch changes from source repository and push to destination repository
-          git fetch origin main:source-main
-          git push origin source-main:destination-branch
-
-          cd ..
-
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  
-
+          git config --global user.name "Ghost8658"
+          git config --global user.email "ghost8658@gmail.com"
+          git clone https://github.com/ghost8658private/trtos.git mirror
+          cd mirror
+          git checkout -b ${{ github.sha }}
+          git push origin ${{ github.sha }}
