@@ -32,6 +32,7 @@ jobs:
         with:
           repository: ghost8658private/trtos.git  # Replace with the target repository's owner and name
           ref: mainn
+          token: ${{ secrets.SOURCE_REPO_ACCESS_TOKEN }}
       
       - name: Commit and Push Changes
         run: |
