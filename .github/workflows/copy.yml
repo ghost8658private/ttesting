@@ -1,36 +1,37 @@
-name: Clone and Push Workflow
+name: Mirror Main Branch and Create PR
 
 on:
-  workflow_dispatch
+  push:
+    branches:
+      - main
 
 jobs:
-  clone_and_push:
+  mirror-and-create-pr:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout source repository
-      uses: actions/checkout@v2  # Checkout the source repository (default: main branch)
+      - name: Checkout source code
+        uses: actions/checkout@v2
 
-    - name: Configure Git
-      run: |
-        git config user.name "ghost8658private"
-        git config user.email "bbbeeeaaabbb9@gmail.com"
+      - name: Clone destination repository
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
 
-    - name: Clone and push to destination repository
-      run: |
-        # Set up destination repository URL
-        DEST_REPO_URL="https://github.com/ghost8658private/trtos.git"
-        
-        # Clone the destination repository
-        git clone $DEST_REPO_URL destination-repo
-        
-        # Copy source repository files to destination repository
-        cp -r * destination-repo/
-        
-        # Move to destination repository directory
-        cd destination-repo
-        
-        # Commit and push changes
-        git add .
-        git commit -m "Sync with source repository"
-        git push origin main
+          git clone --branch main --depth 1 --quiet <https://github.com/ghost8658private/trtos.git> destination-repo
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push changes to destination repository
+        run: |
+          cd destination-repo
+
+          # Ensure the target branch exists in the destination repository
+          git checkout -B main
+
+          # Fetch changes from source repository and push to destination repository
+          git fetch origin main:source-main
+          git push origin source-main:destination-branch
+
+          cd ..
+
