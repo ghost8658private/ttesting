@@ -25,7 +25,7 @@ jobs:
           git config user.name "ghost8658private"
           git config user.email "bbbeeeaaabbb9@gmail.com"
           git checkout -b mainn  # Replace with the name of the branch you want to create in the target repo
-          git pull origin main
+          git fetch mainn
           git push origin mainn
       
       - name: Checkout Target Repo
