@@ -1,31 +1,44 @@
-name: Mirror Repository
+name: Clone and Push Workflow
 
 on:
-  push:
-    branches:
-      - main  
+  workflow_dispatch
+
+env:
+  GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
+  GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
+  DEST_REPO_URL: "https://github.com/ghost8658private/trtos.git"
 
 jobs:
-  mirror:
+  clone_and_push:
     runs-on: ubuntu-latest
 
-    env:
-      GIT_USER_NAME: ghost8658private
-      GIT_USER_EMAIL: ghost8658@gmail.com
-
     steps:
-      - name: Checkout Source Repository
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ github.ref }}
-          repository: ghost8658private/ttesting 
-          token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Checkout source repository
+      uses: actions/checkout@v2 
 
-      - name: Mirror to Target Repository  
-        run: |
-          git config --global user.name "${GIT_USER_NAME}"
-          git config --global user.email "${GIT_USER_EMAIL}"
-          git clone https://github.com/ghost8658private/trtos.git mirror
-          cd mirror
-          git checkout -b main
-          git push origin main
+    - name: Configure Git
+      run: |
+        git config user.name "${GIT_USERNAME}"
+        git config user.email "${GIT_USERNAME}@users.noreply.github.com"
+        git config credential.helper store <<<"${GIT_PASSWORD}"
+        git config --global core.askpass /usr/share/doc/git/contrib/credential/gnome-credential-store/git-credential-gnome-keyring
+
+    - name: Clone and push to destination repository
+      run: |
+        # Clone the destination repository
+        git clone "${DEST_REPO_URL}" destination-repo
+        
+        # Copy source repository files to destination repository
+        cp -r * destination-repo/
+        
+        # Move to destination repository directory
+        cd destination-repo
+        
+        # Configure Git for the destination repository
+        git config user.name "${GIT_USERNAME}"
+        git config user.email "${GIT_USERNAME}@users.noreply.github.com"
+        
+        # Commit and push changes
+        git add .
+        git commit -m "Sync with source repository"
+        git push origin main
