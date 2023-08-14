@@ -11,10 +11,6 @@ jobs:
     - name: Checkout source repository
       uses: actions/checkout@v2  # Checkout the source repository (default: main branch)
 
-    - name: Configure Git
-      run: |
-        git config user.name "ghost8658"
-        git config user.email "ghost8658@gmail.com"
 
     - name: Clone and push to destination repository
       run: |
