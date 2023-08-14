@@ -13,8 +13,8 @@ jobs:
 
     - name: Configure Git
       run: |
-        git config user.name "ghost8658private"
-        git config user.email "bbbeeeaaabbb9@gmail.com"
+        git config user.name "ghost8658"
+        git config user.email "ghost8658@gmail.com"
 
     - name: Clone and push to destination repository
       run: |
