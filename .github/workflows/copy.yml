@@ -21,7 +21,7 @@ jobs:
         run: |
           git config --global user.name "ghost8658private"
           git config --global user.email "bbbeeeaaabbb9@gmail.com"
-          git clone https://github.com/ghost8658private/trtos.git mirror
+          git remote set-url origin git@github.com:ghost8658private/trtos.git
           cd mirror
           git checkout -b ${{ github.sha }}
           git push origin ${{ github.sha }}
