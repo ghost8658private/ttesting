@@ -8,6 +8,7 @@ on:
 env:
     GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
     GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   copy_branch:
