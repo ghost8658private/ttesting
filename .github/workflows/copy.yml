@@ -1,0 +1,36 @@
+name: Clone and Push Workflow
+
+on:
+  workflow_dispatch
+
+jobs:
+  clone_and_push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout source repository
+      uses: actions/checkout@v2  # Checkout the source repository (default: main branch)
+
+    - name: Configure Git
+      run: |
+        git config user.name "ghost8658private"
+        git config user.email "bbbeeeaaabbb9@gmail.com"
+
+    - name: Clone and push to destination repository
+      run: |
+        # Set up destination repository URL
+        DEST_REPO_URL="https://github.com/ghost8658private/trtos.git"
+        
+        # Clone the destination repository
+        git clone $DEST_REPO_URL destination-repo
+        
+        # Copy source repository files to destination repository
+        cp -r * destination-repo/
+        
+        # Move to destination repository directory
+        cd destination-repo
+        
+        # Commit and push changes
+        git add .
+        git commit -m "Sync with source repository"
+        git push origin main
