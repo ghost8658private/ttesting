@@ -17,11 +17,12 @@ jobs:
           repository: ghost8658private/ttesting  # Change this to the source repository
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Mirror to Target Repository
+      - name: Mirror to Target Repository  
         run: |
           git config --global user.name "Ghost8658"
           git config --global user.email "ghost8658@gmail.com"
-          git clone https://github.com/ghost8658private/trtos.git mirror
+          git clone git@github.com:ghost8658private/trtos.git
           cd mirror
           git checkout -b ${{ github.sha }}
           git push origin ${{ github.sha }}
+        
