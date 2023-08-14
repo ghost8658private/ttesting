@@ -15,11 +15,9 @@ jobs:
 
       - name: Clone destination repository
         run: |
-          git config --global url.https://${{ secrets.GITHUB_TOKEN}}@github.com/.insteadOf https://github.com/
-          git config --global user.name "Ghost8658"
-          git config --global user.email "140547947+Ghost8658@users.noreply.github.com"
-
-          git clone --branch main --depth 1 --quiet https://github.com/ghost8658private/trtos.git destination-repo
+            git config --global user.name "Ghost8658"
+            git config --global user.email "Ghost8658@github.com" 
+            git clone --branch main --depth 1 --quiet https://github.com/ghost8658private/trtos.git destination-repo
 
 
       - name: Push changes to destination repository
@@ -34,4 +32,8 @@ jobs:
           git push origin source-main:destination-branch
 
           cd ..
+
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
 
