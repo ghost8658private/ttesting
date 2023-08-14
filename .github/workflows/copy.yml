@@ -15,7 +15,7 @@ jobs:
         with:
           ref: ${{ github.ref }}
           repository: https://github.com/ghost8658private/ttesting.git  # Change this to the source repository
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Mirror to Target Repository
         run: |
