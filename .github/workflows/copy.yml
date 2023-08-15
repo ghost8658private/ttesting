@@ -5,9 +5,6 @@ on:
     branches:
       - main 
 
-env:
-    GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
-    GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
 
 jobs:
   copy_branch:
@@ -24,9 +21,9 @@ jobs:
         run: |
           git config user.name "ghost8658private"
           git config user.email "bbbeeeaaabbb9@gmail.com"
-          git checkout -b mainn  # Replace with the name of the branch you want to create in the target repo
-          git fetch mainn
-          git push origin mainn
+          git checkout -b main  # Replace with the name of the branch you want to create in the target repo
+
+          git push origin main
       
       - name: Checkout Target Repo
         uses: actions/checkout@v2
@@ -42,5 +39,5 @@ jobs:
           # Commit and push the changes to the target repo
           git add .
           git commit -m "Copy changes from source branch"
-          git push origin mainn
+          git push origin main
       
