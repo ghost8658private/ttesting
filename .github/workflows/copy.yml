@@ -33,9 +33,23 @@ jobs:
       
       - name: Commit and Push Changes
         run: |
+        
+          mkdir -p ~/.ssh
+          ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+          echo "${{ secrets.SOURCE_REPO_ACCESS_TOKEN }}" > ~/.ssh/id_rsa
+          chmod 0400 ~/.ssh/id_rsa
+          ls -la ~/.ssh
+          eval $(ssh-agent -s)
+          ssh-add ~/.ssh/id_rsa
+          ssh -T git@github.com
+
+
           # Copy the files from the source branch to the target branch
           cp -r ghost8658private/ttesting* ghost8658private/trtos
-          
+         
+
+
+
           # Commit and push the changes to the target repo
           git add .
           git commit -m "Copy changes from source branch"
