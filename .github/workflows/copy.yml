@@ -21,17 +21,6 @@ jobs:
           git config --global user.email 'ghost8658@email.com'
           git config --global push.default simple
 
-      - name: Make changes
-        run: |
-          # Make your desired changes here
-          # For example:
-          echo "New content" >> file-to-modify.txt
-
-      - name: Commit and push changes
-        run: |
-          git add .
-          git commit -m "Making changes"
-          git push origin power
 
       - name: Clone target repository
         run: |
@@ -42,6 +31,7 @@ jobs:
         run: |
           git checkout -b target-branch
           cp -r ../https://github.com/ghost8658private/ttesting.git/* .
+          echo "New content" >> file-to-modify.txt
           git add .
           git commit -m "Cloned changes"
           git push origin HEAD:target-branch
