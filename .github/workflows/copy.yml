@@ -22,7 +22,6 @@ jobs:
     - name: Create new branch
       run: |
         git checkout -b new-branch
-        git remote set-url origin https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}
         git push --set-upstream origin new-branch
         
     - name: Clone source repository
@@ -38,5 +37,8 @@ jobs:
         # Commit and push changes to the new branch
         git add .
         git commit -m "Clone source repo into new-branch"
-        git remote set-url origin https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}
-        git push origin new-branch
+        
+        
+    - name: GitHub Push
+      uses: ad-m/github-push-action@v0.6.0
+    
