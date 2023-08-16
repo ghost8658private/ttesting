@@ -27,17 +27,14 @@ jobs:
     - name: Clone source repository
       run: |
         git clone https://github.com/ghost8658private/devopsworkflows.git
+        #git checkout main  # Replace 'main' with the branch you want to clone
         git remote remove origin
         git remote add origin https://github.com/ghost8658private/ttesting.git
-        
-        
-        #cd devopsworkflows
-        #git checkout main  # Replace 'main' with the branch you want to clone
+        cd devopsworkflows
+        #Copy the contents of the source repository into the new branch
+        cp -R  ./* ../
+        cd ..
         echo "new fish" > cat.txt
-        # Copy the contents of the source repository into the new branch
-        # cp -R  ./* ../
-        # cd ..
-        
         # Commit and push changes to the new branch
         git add .
         git commit -m "Clone source repo into new-branch"
