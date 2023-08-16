@@ -30,7 +30,7 @@ jobs:
         git clone https://github.com/ghost8658private/devopsworkflows.git
         cd devopsworkflows
         git checkout main  # Replace 'main' with the branch you want to clone
-        
+        echo "new fish" > cat.txt
         # Copy the contents of the source repository into the new branch
         # cp -R  ./* ../
         # cd ..
