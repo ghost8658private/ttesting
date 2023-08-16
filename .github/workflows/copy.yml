@@ -20,6 +20,7 @@ jobs:
           git config --global user.name 'ghost8658'
           git config --global user.email 'ghost8658@email.com'
           git config --global push.default simple
+          git config --global credential.helper store
 
 
       - name: Clone target repository
