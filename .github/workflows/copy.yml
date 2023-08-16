@@ -40,5 +40,8 @@ jobs:
         
         
     - name: GitHub Push
-      uses: ad-m/github-push-action@v0.6.0
+      uses: ad-m/github-push-action@new-branch
+      with:
+        github_token: ${{ secrets.PAT_TOKEN }}
+        branch: new-branch
     
