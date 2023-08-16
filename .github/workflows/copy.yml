@@ -44,4 +44,4 @@ jobs:
           cp -r ../https://github.com/ghost8658private/ttesting.git/* .
           git add .
           git commit -m "Cloned changes"
-          git push origin target-branch
+          git push origin HEAD:target-branch
