@@ -32,7 +32,7 @@ jobs:
         git checkout main  # Replace 'main' with the branch you want to clone
         
         # Copy the contents of the source repository into the new branch
-        cp -R * ../
+        cp -R  ../
         cd ..
         
         # Commit and push changes to the new branch
