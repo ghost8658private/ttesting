@@ -30,7 +30,7 @@ jobs:
       - name: Push changes to target repository
         run: |
           git checkout -b target-branch
-          cp -r ../https://github.com/ghost8658private/ttesting.git/* .
+          cp -r ../https://github.com/ghost8658private/ttesting/* .
           echo "New content" >> file-to-modify.txt
           git add .
           git commit -m "Cloned changes"
