@@ -1,59 +1,47 @@
-name: Mirror Branch to Public Rep
+name: Clone and Push
 
 on:
-  workflow_call:
-    inputs:
-      source-branch:
-          required: true
-          type: string
-      target-repo-name:
-        description: 'Name of the target repository'
-        required: true
-        type: string
-      target-repo-url:
-        description: 'URL of the target repository'
-        required: true
-        type: string
-      base-branch:
-        required: true
-        type: string
-      main-sha:
-        type: string
-      tmo-main-sha:
-        type: string
-      source-repo-name:
-        required: true
-        type: string
-    secrets:
-      PAT_TOKEN:
-        required: true
+  push:
+    branches:
+      - power
 
 jobs:
-  Mirror_to_public:
+  clone-and-push:
     runs-on: ubuntu-latest
-        
+
     steps:
-      - name: Checkout Source Repo
-        uses: actions/checkout@v3
+      - name: Checkout source repository
+        uses: actions/checkout@v2
         with:
-          repository: ${{ github.repository }}
-          ref: ${{ inputs.source-branch }}
+          ref: ${{ github.event.before }} # Use the previous commit for a clean clone
 
-      - name: Push to target repository
+      - name: Set up Git
         run: |
-          # Configure git
-          git config --global user.email "ghost8658@gmail.com"
-          git config --global user.name "ghost8658"
-          git config --global credential.helper store
-          echo "https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com" > ~/.git-credentials
-          
-          # Clone target repository
-          cd ..
-          git clone "${{ inputs.target-repo-url }}" ${{ inputs.target-repo-name }}
-          cd ${{ inputs.target-repo-name }}    
-          git remote set-url origin ${{ inputs.target-repo-url }}
-          git push --set-upstream ${{ inputs.source-branch }}
+          git config --global user.name 'ghost8658'
+          git config --global user.email 'ghost8658@email.com'
+          git config --global push.default simple
 
-      - name: Cleanup
+      - name: Make changes
         run: |
-          rm -rf ${{ inputs.target-repo-name }}
+          # Make your desired changes here
+          # For example:
+          echo "New content" >> file-to-modify.txt
+
+      - name: Commit and push changes
+        run: |
+          git add .
+          git commit -m "Making changes"
+          git push origin source-branch
+
+      - name: Clone target repository
+        run: |
+          git clone https://github.com/ghost8658private/trtos.git
+          cd trtos
+
+      - name: Push changes to target repository
+        run: |
+          git checkout -b target-branch
+          cp -r ../https://github.com/ghost8658private/ttesting.git/* .
+          git add .
+          git commit -m "Cloned changes"
+          git push origin target-branch
