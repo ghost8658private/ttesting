@@ -24,13 +24,12 @@ jobs:
 
       - name: Clone target repository
         run: |
-          git clone https://github.com/ghost8658private/trtos.git
-          cd trtos
+          # git clone https://github.com/ghost8658private/trtos.git
 
       - name: Push changes to target repository
         run: |
           git checkout -b target-branch
-          cp -r ../https://github.com/ghost8658private/ttesting/* .
+          # cp -r ../trtos/* .
           echo "New content" >> file-to-modify.txt
           git add .
           git commit -m "Cloned changes"
