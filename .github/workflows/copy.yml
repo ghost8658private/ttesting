@@ -22,7 +22,7 @@ jobs:
     - name: Create new branch
       run: |
         git checkout -b new-branch
-        git push --set-upstream new-branch
+        git push --set-upstream origin new-branch
         
     - name: Clone source repository
       run: |
