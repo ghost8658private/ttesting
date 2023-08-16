@@ -1,4 +1,4 @@
-name: Mirror Branch to Public Repo
+name: Mirror Branch to Public Rep
 
 on:
   workflow_call:
