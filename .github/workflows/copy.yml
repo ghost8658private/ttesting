@@ -27,7 +27,6 @@ jobs:
     - name: Clone source repository
       run: |
         git clone https://github.com/ghost8658private/devopsworkflows.git
-        git checkout main
         git remote remove origin
         git remote add origin https://github.com/ghost8658private/ttesting.git
         
