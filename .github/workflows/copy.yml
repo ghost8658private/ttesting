@@ -21,8 +21,8 @@ jobs:
     
     - name: Create new branch
       run: |
-        git checkout -b new-branch
-        git push --set-upstream origin new-branch
+        
+        git pull https://github.com/ghost8658private/fourth.git
         
     - name: Clone source repository
       run: |
