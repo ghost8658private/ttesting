@@ -31,7 +31,6 @@ jobs:
         git remote add origin https://github.com/ghost8658private/ttesting.git
         
         
-        git checkout main  # Replace 'main' with the branch you want to clone
         echo "new fish" > cat.txt
 
         
