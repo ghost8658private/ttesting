@@ -1,10 +1,12 @@
-name: Copy Branch to Another Repo
+name: update main branch
 
 on:
   push:
     branches:
       - main 
 
+env:
+  github_token: ${{ secrets.PAT_TOKEN }}
 
 jobs:
   copy_branch:
@@ -13,45 +15,12 @@ jobs:
     steps:
       - name: Checkout Source Repo
         uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.before }}
-          token: ${{ secrets.SOURCE_REPO_ACCESS_TOKEN }}
       
       - name: Create New Branch in Target Repo
         run: |
-          git config user.name "ghost8658private"
-          git config user.email "bbbeeeaaabbb9@gmail.com"
-          git checkout -b main  # Replace with the name of the branch you want to create in the target repo
+          git checkout main
+          git remote remove origin
+          git remote add origin https://github.com/ghost8658private/ttesting.git
+          git pull origin main
+          ls
 
-          git push origin main
-      
-      - name: Checkout Target Repo
-        uses: actions/checkout@v2
-        with:
-          repository: ghost8658private/trtos.git  # Replace with the target repository's owner and name
-          ref: mainn
-      
-      - name: Commit and Push Changes
-        run: |
-        
-          mkdir -p ~/.ssh
-          ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-          echo "${{ secrets.SOURCE_REPO_ACCESS_TOKEN }}" > ~/.ssh/id_rsa
-          chmod 0400 ~/.ssh/id_rsa
-          ls -la ~/.ssh
-          eval $(ssh-agent -s)
-          ssh-add ~/.ssh/id_rsa
-          ssh -T git@github.com
-
-
-          # Copy the files from the source branch to the target branch
-          cp -r ghost8658private/ttesting* ghost8658private/trtos
-         
-
-
-
-          # Commit and push the changes to the target repo
-          git add .
-          git commit -m "Copy changes from source branch"
-          git push origin main
-      
